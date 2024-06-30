@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Material manage auth service</title>
+    <link rel="icon" href="www/img/favicon/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Dashboard" name="description" />
+    <meta content="Themesbrand" name="HNV" />
+    <script src="www/js/lib/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="www/js/lib/handlebars.js"></script>
+    <script src="www/js/app/common/ctrl/InputTool.js"></script>
+    <script src="www/js/app/group/student/ctrl/code.js"></script>
+    <style>
+    body {
+    background-color: #f0f0f0; /* Lighter background for better readability */
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+	}
+	.ds {
+	    display: flex;
+	    flex-direction: column;
+	    align-items: center;
+	    margin: auto;
+	    width: 80%; /* Adjusted width for better responsiveness */
+	    max-width: 1000px; /* Set a maximum width to prevent stretching on larger screens */
+	    padding: 20px;
+	    background-color: #ffffff; /* White background for main content */
+	    border: 1px solid #ccc; /* Light border */
+	    border-radius: 8px;
+	    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+	}
+	#khoi {
+	    background-color: #283d5a;
+	    color: #ffffff;
+	    padding: 20px;
+	    border-radius: 8px;
+	    margin-bottom: 20px;
+	}
+	#demuc {
+	    display: flex;
+	    justify-content: space-between; /* Better alignment for headings */
+	    align-items: center; /* Vertical centering */
+	    margin-bottom: 10px;
+	}
+	#name, #age, #note, #ages, #notes {
+	    padding: 10px;
+	    font-size: 16px; /* Slightly reduced font size for better readability */
+	   /*  border: none; */
+	    border-radius: 4px;
+	}
+	#formsearch {
+	    margin-top: 20px;
+	    margin-bottom: 20px;
+	}
+	#search {
+	    margin-left: auto; /* Align search button to the right */
+	}
+	#inputsearch, #buttonsearch, #inputsearchage, #buttonsearchage, #reset, #input, #btn_show {
+	    padding: 8px 12px; /* Adjusted padding for buttons and inputs */
+	    font-size: 16px;
+	    border-radius: 4px;
+	    cursor: pointer;
+	}
+	#tieude {
+	    font-size: 24px; /* Reduced font size for title */
+	    font-weight: bold;
+	    margin-bottom: 20px;
+	}
+	
+	
+	h1{
+	text-align: center;
+	}
+	#bang {
+	    width: 100%;
+	    border-collapse: collapse; /* Ensure table borders collapse properly */
+	}
+	
+	#bang th, #bang td {
+	    padding: 8px;
+	    text-align: center;
+	    border: 1px solid #ccc;
+	}
+	
+	.modal {
+	    display: none;
+	    position: fixed;
+	    z-index: 1;
+	    left: 0;
+	    top: 0;
+	    width: 100%;
+	    height: 100%;
+	    overflow: auto;
+	    background-color: rgba(0, 0, 0, 0.4);
+	   
+	}
+	.modal-content {
+    background-color: #ffffff;
+    margin: auto auto; /* This centers the modal horizontally */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width : 600px;
+    
+	}
+
+	.close {
+	    color: #aaa;
+	    float: right;
+	    font-size: 24px;
+	    font-weight: bold;
+	    cursor: pointer;
+	}	
+	.close:hover,
+	.close:focus {
+	    color: #000;
+	    text-decoration: none;
+	}
+	#addButton {
+		margin-bottom : 5px;
+	    padding: 10px 10px; /* Adjust padding for button */
+	    font-size: 16px; /* Font size */
+	    background-color: #4CAF50; /* Background color */
+	    color: #ffffff; /* Text color */
+	    border: none; /* No border */
+	    border-radius: 4px; /* Rounded corners */
+	    cursor: pointer; /* Pointer cursor */
+	    transition: background-color 0.3s ease; /* Smooth background color transition */
+	}
+	
+	#addButton:hover {
+	    background-color: #45a049; /* Darker background color on hover */
+	}
+	
+	#addButton:focus {
+	    outline: none; 
+	}
+	
+	#addButton:disabled {
+	    background-color: #cccccc; 
+	    cursor: not-allowed; 
+	} 
+
+	.form-group {
+        margin-bottom: 15px;
+     }
+     .form-group label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      .form-group input,
+      .form-group select {
+         width: 100%;
+         padding: 8px;
+         border: 1px solid #ccc;
+         border-radius: 4px;
+         box-sizing: border-box;
+        }
+        .form-group select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path d="M0 0l5 5 5-5z" /></svg>') no-repeat right 10px center;
+            background-size: 10px;
+        }
+        #div_01 {
+	     	background: #fff;
+            padding: 25px 5px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 600px;  
+            max-height: 1000px;  
+	}
+    </style>
+   
+</head>
+<body>
+    <div class="ds">
+        <div id="formsearch">
+            <div id="tieude">STUDENT LIST</div>
+        </div>
+        <div class="khoilon">
+            <div><button id="addButton">Add New Student</button></div>
+            <div id="khoi">
+                <div id="div_02"></div>
+            </div>
+        </div>
+    </div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h1>Thêm thông tin</h1>
+            <div id="div_01">
+            
+            
+            </div>
+        </div>
+    </div>
+</body>
+</html>

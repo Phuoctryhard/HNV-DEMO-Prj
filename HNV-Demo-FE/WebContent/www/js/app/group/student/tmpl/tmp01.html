@@ -1,0 +1,40 @@
+		<div class="form-group">
+            <label for="name">Name:</label>
+            <input class="objData" type="text" data-name="name" value="{{name}}" id="name" placeholder="Enter your name">
+        </div>
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input class="objData" type="number" data-name="age" value="{{age}}" id="age" placeholder="Enter your age">
+        </div>
+        {{#mon}}
+        <div class="form-group">
+            <label for="tenmon">Subject:</label>
+            <select class="objData" data-group="mon" data-gindex="{{@index}}" data-name="tenmon" id="tenmon">
+                {{#select tenmon}}
+                <option value="Toan">Toan</option>
+                <option value="Van">Van</option>
+                <option value="Tieng Anh">Tieng Anh</option>
+                {{/select}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="diem">Score:</label>
+            <select class="objData" data-group="mon" data-gindex="{{@index}}" data-name="diem" id="diem">
+                {{#select diem}}
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                {{/select}}
+            </select>
+        </div>
+        {{/mon}}
+        <button id="btn_show" type="button">OK</button>
+   

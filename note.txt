@@ -1,0 +1,17 @@
+cho phép ứng dụng web kết nối đến một cơ sở dữ liệu MySQL bằng JDBC.
+name: Tên JNDI của tài nguyên.
+auth: Xác định xem việc xác thực do ứng dụng web hay container quản lý.
+type: Lớp Java của tài nguyên.
+username và password: Thông tin xác thực cho cơ sở dữ liệu.
+driverClassName: Lớp driver JDBC.
+url: URL JDBC để kết nối đến cơ sở dữ liệu.
+Các tham số cấu hình kết nối khác (initialSize, maxWaitMillis, maxTotal, v.v.).
+Tóm tắt
+
+=>
+Tệp cấu hình này thiết lập một ứng dụng web trong Tomcat với:
+
+Các tài nguyên được theo dõi để tự động tải lại.
+Một DataSource JDBC để kết nối đến cơ sở dữ liệu MySQL.
+Các tham số khác nhau cho các đường dẫn tệp và cấu hình khác.
+Cấu hình (bị chú thích) cho xác thực dựa trên cơ sở dữ liệu trong container.

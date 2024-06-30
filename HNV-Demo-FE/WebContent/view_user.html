@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thêm User </title>
+
+    <script src="www/js/lib/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="www/js/lib/handlebars.js"></script>
+    <script src="www/js/app/common/ctrl/InputTool.js"></script>
+    <script src ="www/js/lib/i18n/jquery.i18n.js"></script>
+    <script src="www/js/app/group/user/ctrl/main.js"></script>
+	<style>
+	html, body {
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+        body {
+            display: flex;
+             flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #cont {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+	
+	</style>
+  </head>
+  <body>
+    <!-- data -->
+    <div id="ping01"></div>
+    <div id="ping02"></div>
+    <hr />
+    <!--cont sẽ thêm data   -->
+    <div id="cont"></div>
+    <script>
+			var FIRST_VIEW 	= "VI_MAIN";
+			var VIEW_PART 	= "VI_PER_PRODUCER";
+	</script>
+  </body>
+</html>
