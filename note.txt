@@ -1,8 +1,14 @@
+Ngày 30/6
 + Chỉ làm đc câu 1 , câu 2 và gọi đc api Thêm user
 +  truy cập vào trang 
 Sinhvien:
 http://localhost:8080/view_sinhvien.html
 User:
 http://localhost:8080/view_user.html
+
+
+Ngày 2/7 : 
+- Show nhưng gọi api không trả về data.
+- Vẫn chưa làm đc gì.
 
 
