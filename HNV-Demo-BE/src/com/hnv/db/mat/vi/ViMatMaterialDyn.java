@@ -53,7 +53,7 @@ public class ViMatMaterialDyn extends EntityAbstract<ViMatMaterialDyn> {
 	public static final String	COL_T_NAME_01                         =	"T_Name_01";
 	public static final String	COL_T_NAME_02                         =	"T_Name_02";
 	
-	public static final String	COL_I_STATUS                          =	"I_Status";
+	public static final String	COL_I_STATUS_01                       =	"I_Status_01";
 	public static final String	COL_I_TYPE_01                         =	"I_Type_01";
 	public static final String	COL_I_TYPE_02                         =	"I_Type_02";
 	public static final String	COL_I_TYPE_03                         =	"I_Type_03";
@@ -92,7 +92,7 @@ public class ViMatMaterialDyn extends EntityAbstract<ViMatMaterialDyn> {
 	public static final String	ATT_T_NAME_01                         =	"T_Name_01";
 	public static final String	ATT_T_NAME_02                         =	"T_Name_02";
 	
-	public static final String	ATT_I_STATUS                          =	"I_Status";
+	public static final String	ATT_I_STATUS_01                          =	"I_Status_01";
 	
 	public static final String	ATT_I_CATEGORY                     	  =	"I_Category";
 	public static final String	ATT_T_CATEGORY                     	  =	"T_Category";
@@ -170,8 +170,8 @@ public class ViMatMaterialDyn extends EntityAbstract<ViMatMaterialDyn> {
 	@Column(name=COL_I_TYPE_02, nullable = true)
 	private	Integer         I_Type_02;
 
-	@Column(name=COL_I_STATUS, nullable = true)
-	private	Integer         I_Status;
+	@Column(name=COL_I_STATUS_01, nullable = true)
+	private	Integer         I_Status_01;
 
 	@Column(name=COL_I_PER_MANAGER, nullable = true)
 	private	Integer         I_Per_Manager;

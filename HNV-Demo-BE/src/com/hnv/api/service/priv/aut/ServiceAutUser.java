@@ -334,26 +334,23 @@ public class ServiceAutUser implements IService {
 			put("id"		, 0 );
 			put("login01"	, 1 );
 			put("inf01"		, 2 );
+			put("inf03"  	, 3 );
+			put("inf04"  	, 4 );
 		}
 	};
 	private static void doLstDyn(TaAutUser user,  JSONObject json, HttpServletResponse response) throws Exception {	
 		Object[]  			dataTableOption = ToolDatatable.reqDataTableOption (json, null);
 		Set<String>			searchKey		= (Set<String>)dataTableOption[0];
 		Set<Integer>		stats			= ToolData.reqSetInt	(json, "stats"	, null);
-		Integer				typ01			= ToolData.reqInt		(json, "typ01"	, null);
-		Integer				typ02			= ToolData.reqInt		(json, "typ02"	, null);
+	
 		
-		if(typ01 == null && typ02== null && stats ==null) {
-			API.doResponse(response,DefAPI.API_MSG_KO);
-			return;
-		}
 		
 		if (!canWorkWithObj(user, WORK_LST, null, stats)){ //other param after objTyp...
 			API.doResponse(response,DefAPI.API_MSG_KO);
 			return;
 		}
 		//-------------------------------------------------------------------
-		Criterion 	cri 				= reqRestriction(user, searchKey, null, stats, typ01, typ02);				
+		Criterion 	cri 				= reqRestriction(user, searchKey, null, stats);				
 
 		List<ViAutUserDyn> list 		= reqListDyn(dataTableOption, cri);
 		if (list==null ){
@@ -469,29 +466,31 @@ public class ServiceAutUser implements IService {
 						Restrictions.ilike(ViAutUserDyn.ATT_T_LOGIN_01, searchKey), 
 						Restrictions.ilike(ViAutUserDyn.ATT_T_LOGIN_02, searchKey),
 						Restrictions.ilike(ViAutUserDyn.ATT_T_INFO_01, searchKey),
-						Restrictions.ilike(ViAutUserDyn.ATT_T_INFO_02, searchKey))
+						Restrictions.ilike(ViAutUserDyn.ATT_T_INFO_02, searchKey) , 
+						Restrictions.ilike(ViAutUserDyn.ATT_T_INFO_03, searchKey))
+						
 				);
 		}
 		
 		return cri;
 	}
 
-	private static Criterion reqRestriction(TaAutUser user,  Set<String> searchKey, Integer manId, Set<Integer> stats, Integer typ01, Integer typ02 ) throws Exception {	
+	private static Criterion reqRestriction(TaAutUser user,  Set<String> searchKey, Integer manId, Set<Integer> stats ) throws Exception {	
 		//--Pre-Check condition---------------------------------------------------
 		if (stats == null){
 			stats = new HashSet<>() ; 
-			stats.add(ViAutUserDyn.STAT_ACTIVE);
+			stats.add(ViAutUserDyn.STAT_DELETED);
 		}
 				
 		Criterion cri = Restrictions.in(ViAutUserDyn.ATT_I_STATUS, stats);
-		
-		if(typ01 != null) {
-			cri = Restrictions.and(	cri, Restrictions.eq(ViAutUserDyn.ATT_I_TYPE_01 , typ01));
-			
-			if(typ01 == ViAutUserDyn.TYPE_01_AGENT) {
-				cri = Restrictions.and(	cri, Restrictions.eq(ViAutUserDyn.ATT_I_TYPE_02 , typ02));
-			}
-		}
+//		
+//		if(typ01 != null) {
+//			cri = Restrictions.and(	cri, Restrictions.eq(ViAutUserDyn.ATT_I_TYPE_01 , typ01));
+//			
+////			if(typ01 == ViAutUserDyn.TYPE_01_AGENT) {
+////				cri = Restrictions.and(	cri, Restrictions.eq(ViAutUserDyn.ATT_I_TYPE_02 , typ02));
+////			}
+//		}
 
 		if (searchKey != null) {
 			for (String s : searchKey){
@@ -499,7 +498,9 @@ public class ServiceAutUser implements IService {
 						Restrictions.ilike(ViAutUserDyn.ATT_T_LOGIN_01, '%'+s+'%'),
 						Restrictions.ilike(ViAutUserDyn.ATT_T_LOGIN_02, '%'+s+'%'),
 						Restrictions.ilike(ViAutUserDyn.ATT_T_INFO_01, '%'+s+'%'),
-						Restrictions.ilike(ViAutUserDyn.ATT_T_INFO_02, '%'+s+'%'))
+						Restrictions.ilike(ViAutUserDyn.ATT_T_INFO_02, '%'+s+'%'), 
+						Restrictions.ilike(ViAutUserDyn.ATT_T_INFO_03, '%'+s+'%')
+						)
 				);
 			}
 		}
@@ -576,6 +577,9 @@ public class ServiceAutUser implements IService {
 
 		//--------------------------------------------------------------------------------------------
 		Map<String, Object> attrUsr = API.reqMapParamsByClass(obj	, TaAutUser.class);
+//		{"inf01":"name"}
+//		attrUsr = {"T_Login_01":"name","T_n":1}
+// 		attrUsr.get("T_Login_01)
 		
 		//----Test------------------------------------------------------------------------------------
 		String 			login		= (String) attrUsr.get(TaAutUser.ATT_T_LOGIN_01);	
@@ -584,6 +588,7 @@ public class ServiceAutUser implements IService {
 		if (test!=null) return null;
 		
 		//----set value------------------------------------------------------------------------------------
+		attrUsr.put(TaAutUser.ATT_I_STATUS, 1);
 		attrUsr.put(TaAutUser.ATT_D_DATE_01		, new Date());
 		attrUsr.put(TaAutUser.ATT_D_DATE_02		, null);
 		attrUsr.put(TaAutUser.ATT_I_AUT_USER_01	, userId);

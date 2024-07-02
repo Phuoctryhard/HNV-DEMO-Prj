@@ -41,7 +41,9 @@
 		<mapping class="com.hnv.db.tpy.TaTpyCategory" />
 		<mapping class="com.hnv.db.tpy.TaTpyCategoryEntity" />
 		<mapping class="com.hnv.db.tpy.vi.ViTpyCategoryDyn" />
-
+		
+		<mapping class="com.hnv.db.mat.TaMatMaterial"/>
+		<mapping class="com.hnv.db.mat.vi.ViMatMaterialDyn"/>
 		<!-- SYS -->
 		<mapping class="com.hnv.db.sys.TaSysLock" />
 		<mapping class="com.hnv.db.sys.TaSysException" />

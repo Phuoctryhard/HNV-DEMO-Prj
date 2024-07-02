@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.criterion.Restrictions;
@@ -50,7 +51,7 @@ public class ViMatMaterial extends EntityAbstract<ViMatMaterial> {
 	public static final String	COL_T_NAME_01                         =	"T_Name_01";
 	public static final String	COL_T_NAME_02                         =	"T_Name_02";
 	
-	public static final String	COL_I_STATUS                          =	"I_Status";
+	public static final String	COL_I_STATUS_01                       =	"I_Status_01";
 	public static final String	COL_I_TYPE_01                         =	"I_Type_01";
 	public static final String	COL_I_TYPE_02                         =	"I_Type_02";
 	
@@ -86,7 +87,7 @@ public class ViMatMaterial extends EntityAbstract<ViMatMaterial> {
 	public static final String	ATT_T_NAME_01                         =	"T_Name_01";
 	public static final String	ATT_T_NAME_02                         =	"T_Name_02";
 	
-	public static final String	ATT_I_STATUS                          =	"I_Status";
+	public static final String	ATT_I_STATUS_01                       =	"I_Status_01";
 	
 	public static final String	ATT_I_CATEGORY                     	  =	"I_Category";
 	public static final String	ATT_T_CATEGORY                     	  =	"T_Category";
@@ -155,8 +156,8 @@ public class ViMatMaterial extends EntityAbstract<ViMatMaterial> {
 	@Column(name=COL_T_NAME_02, nullable = true)
 	private	String          T_Name_02;
 
-	@Column(name=COL_I_STATUS, nullable = true)
-	private	Integer         I_Status;
+	@Column(name=COL_I_STATUS_01, nullable = true)
+	private	Integer         I_Status_01;
 		
 	
 	@Column(name=COL_I_CATEGORY, nullable = true)
@@ -245,14 +246,14 @@ public class ViMatMaterial extends EntityAbstract<ViMatMaterial> {
 		//doInitDBFlag();
 	}
 
-	public ViMatMaterial(String T_Code_01, String T_Code_02, String T_Code_03, String T_Code_04, String T_Name_01, String T_Name_02, String T_Description_01, String T_Description_02, String T_Description_03, Integer I_Type_01, Integer I_Type_02, Integer I_Status, String T_Comment, Integer I_Unit_Ref, String T_Unit, Integer I_Per_Producer, Integer I_Per_Manager) throws Exception {
+	public ViMatMaterial(String T_Code_01, String T_Code_02, String T_Code_03, String T_Code_04, String T_Name_01, String T_Name_02, String T_Description_01, String T_Description_02, String T_Description_03, Integer I_Type_01, Integer I_Type_02, Integer I_Status_01, String T_Comment, Integer I_Unit_Ref, String T_Unit, Integer I_Per_Producer, Integer I_Per_Manager) throws Exception {
 		this.reqSetAttr(
 				ATT_T_CODE_01              , T_Code_01,
 				ATT_T_CODE_02              , T_Code_02,
 				ATT_T_CODE_04              , T_Code_04,
 				ATT_T_NAME_01              , T_Name_01,
 				ATT_T_NAME_02              , T_Name_02,
-				ATT_I_STATUS               , I_Status
+				ATT_I_STATUS_01             , I_Status_01
 				);
 		//doInitDBFlag();
 	}
@@ -273,7 +274,7 @@ public class ViMatMaterial extends EntityAbstract<ViMatMaterial> {
 		this.T_Code_04              = ent.T_Code_04;
 		this.T_Name_01              = ent.T_Name_01;
 		this.T_Name_02              = ent.T_Name_02;
-		this.I_Status               = ent.I_Status;
+		this.I_Status_01               = ent.I_Status_01;
 		//---------------------Merge Transient Variables if exist-----------------------
 	}
 
@@ -306,7 +307,7 @@ public class ViMatMaterial extends EntityAbstract<ViMatMaterial> {
 				"T_Code_04:"+                 T_Code_04 +"," + 
 				"T_Name_01:"+                 T_Name_01 +"," + 
 				"T_Name_02:"+                 T_Name_02 +"," + 
-				"I_Status:"+                  I_Status +"," + 
+				"I_Status:"+                  I_Status_01 +"," + 
 				"}";
 
 	}
@@ -326,7 +327,7 @@ public class ViMatMaterial extends EntityAbstract<ViMatMaterial> {
 			+		" mat."	+ TaMatMaterial.COL_T_CODE_04		+ " AS "	+ COL_T_CODE_04			+ ","
 			+		" mat."	+ TaMatMaterial.COL_I_PER_MANAGER	+ " AS "	+ COL_I_PER_MANAGER		+ ","
 			+		" mat."	+ TaMatMaterial.COL_I_PER_PERSON_01	+ " AS "	+ COL_I_PER_PERSON_01	+ ","
-			+		" mat."	+ TaMatMaterial.COL_I_STATUS_01		+ " AS "	+ COL_I_STATUS			+ ","
+			+		" mat."	+ TaMatMaterial.COL_I_STATUS_01		+ " AS "	+ COL_I_STATUS_01			+ ","
 			+		" mat."	+ TaMatMaterial.COL_D_DATE_01		+ " AS "	+ COL_D_DATE_01			+ ","
 			+		" mat."	+ TaMatMaterial.COL_D_DATE_02		+ " AS "	+ COL_D_DATE_02			+ ","
 			

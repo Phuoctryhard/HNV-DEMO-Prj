@@ -1,19 +1,17 @@
 define([
         'jquery',
-        'text!group/aut/std/tmpl/Ent_Btn.html',
-        'text!group/aut/std/tmpl/Ent_Btn_Sub.html'
+        'text!group/mat/material/tmpl/Ent_Btn.html',
+        'text!group/mat/material/tmpl/Ent_Btn_Sub.html',
         ],
-
         function($, 
         		Tmpl_Ent_Btn,
-        		Tmpl_Ent_Btn_Sub) {
-
-
-	var CtrlEntBtn     = function (header,content,footer, grpName) {
+        		Tmpl_Ent_Btn_Sub
+        		
+        		) {
+	var CtrlEntBtn     = function (header,content,footer,grpName) {
 		var pr_divHeader 			= header;
 		var pr_divContent 			= content
 		var pr_divFooter 			= footer;
-
 		//------------------------------------------------------------------------------------
 		var pr_grpName				= grpName;
 		//------------------------------------------------------------------------------------
@@ -36,6 +34,10 @@ define([
 		var pr_ctr_Main 			= null;
 		var pr_ctr_List 			= null;
 		var pr_ctr_Ent				= null;
+		var pr_ctr_EntHeader 		= null;
+		var pr_ctr_EntBtn 			= null;
+		var pr_ctr_EntTabs 			= null;
+		
 		
 		//-----------------------------------------------------------------------------------
 		var pr_obj					= null;
@@ -57,14 +59,11 @@ define([
 		
 		//--------------------APIs--------------------------------------//
 		this.do_lc_init		= function(){
-			//----step 01: load template----------------------------------------------------------------------------------------------
-			tmplName.ENT_BTN								= "EntBtn";
-			tmplName.ENT_BTN_SUB							= "EntBtn_Sub";
-			
+			tmplName.ENT_BTN					= "EntBtn";
+			tmplName.ENT_BTN_SUB				= "EntBtn_Sub";
 			tmplCtrl.do_lc_put_tmpl(tmplName.ENT_BTN		, Tmpl_Ent_Btn); 
 			tmplCtrl.do_lc_put_tmpl(tmplName.ENT_BTN_SUB	, Tmpl_Ent_Btn_Sub); 
-			
-			//-------------------------------------------------------------------------------
+			//----------------------------------------------------------------------
 			pr_ctr_Main 			= App.controller[pr_grpName].Main;
 			pr_ctr_List 			= App.controller[pr_grpName].List;
 			pr_ctr_Ent				= App.controller[pr_grpName].Ent;
@@ -72,7 +71,9 @@ define([
 		
 
 		this.do_lc_show		= function(obj, mode){
-			pr_obj 	= obj? obj : {};
+			pr_obj 	= {};
+			if(obj)
+				pr_obj = obj;
 			pr_mode		= mode;
 			try{
 				$("#div_Ent_Btn")		.html(tmplCtrl.req_lc_compile_tmpl(tmplName.ENT_BTN		, pr_obj));
@@ -99,7 +100,7 @@ define([
 				}else if(mode==App['const'].MODE_SEL){ // a object selected				
 					$(pr_btn_Create		)	.show();
 					$(pr_btn_Edit		)	.show();
-					$(pr_btn_Duplicate	)	.show();
+					$(pr_btn_Duplicate	)	.hide();
 					$(pr_btn_Del		)	.show();
 
 					$(pr_btn_Export		)	.hide();
@@ -165,12 +166,10 @@ define([
 				$(pr_btn_Transform	)	.hide();	
 				
 				do_gl_apply_right($("#div_Ent_Btn"));
-			}catch(e) {		
+			}catch(e) {	
 				console.log(e);
-				do_gl_exception_send(App.path.BASE_URL_API_PRIV,  "aut.role", "CtrlEntBtn", "do_lc_show", e.toString()) ;
+				do_gl_exception_send(App.path.BASE_URL_API_PRIV,  "tpy.category", "EntBtn", "do_lc_show", e.toString()) ;
 			}
-			
-			
 		};
 
 
@@ -203,8 +202,9 @@ define([
 			$(pr_btn_Del).off('click');
 			$(pr_btn_Del).click(function(){				
 				App.MsgboxController.do_lc_show({
-					title	: $.i18n("msgbox_alert_title"),
-					content : $.i18n("msgbox_del_content"	),
+					title	: $.i18n("msgbox_del_title"),
+					content : $.i18n("msgbox_del_cont"	),
+					width	: window.innerWidth<1024?"95%":"40%",
 					buttons	: {
 						OK: {
 							lab		: $.i18n("common_btn_ok"),
@@ -230,23 +230,25 @@ define([
 				pr_ctr_Ent.do_lc_save(obj, mode);				
 			});
 		}
+		//----------------------------------------------------------------------------------------------
 		var do_bind_event_btn_cancel		= function(obj, mode){
 			var functCancel = function(){
 				App.MsgboxController.do_lc_show({
-					title	: $.i18n("msgbox_confirm_title"),
+					title	: $.i18n("msgbox_cancel_title"),
 					content : $.i18n("msgbox_cancel_cont"),
+					width	: window.innerWidth<1024?"95%":"40%",
 					buttons	: {
 						OK: {
 							lab		: $.i18n("common_btn_ok"),
 							funct	: doCancel,
-							param	: [obj, mode]							
+							param	: [obj]							
 						},
 						NO: {
 							lab		:  $.i18n("common_btn_cancel")								
 						}
 					}
 				});	
-			};
+			}
 			
 			$(pr_btn_Cancel).off('click');
 			$(pr_btn_Cancel).click(functCancel);
@@ -254,14 +256,17 @@ define([
 			$(pr_btn_Cancel_Sub).off('click');
 			$(pr_btn_Cancel_Sub).click(functCancel);
 		}
-
-		var do_bind_event_btn_duplicate		= function(obj, mode){
-			$(pr_btn_Duplicate).off('click');
-			$(pr_btn_Duplicate).click(function(){
-				pr_ctr_Ent.do_lc_duplicate(obj);		
-			});
+		
+		var doCancel = function (obj){		
+			if(App.data.mode == App['const'].MODE_NEW) {	
+				pr_ctr_Ent	.do_lc_show			(null);
+			} else if(App.data.mode == App['const'].MODE_MOD) {				
+				pr_ctr_Ent	.do_lc_Lock_Cancel	(obj);			
+			} 			
 		}
 		
+		//----------------------------------------------------------------------------------------------
+		//----------------------------------------------------------------------------------------------
 		var do_bind_event_btn_export		= function(obj, mode){
 			$(pr_btn_Export).off('click');
 			$(pr_btn_Export).click(function(){
@@ -287,16 +292,7 @@ define([
 		}
 		
 
-		//----------------------------------------------------------------------------------------------
-		function doCancel(obj, mode){		
-			if(mode == App['const'].MODE_NEW) {	
-				App.data.mode = App['const'].MODE_INIT;
-				pr_ctr_Ent	.do_lc_show		(null, App['const'].MODE_INIT);
-				
-			} else if(mode == App['const'].MODE_MOD) {				
-				pr_ctr_Ent	.do_lc_Lock_Cancel	(obj);			
-			} 			
-		}
+		
 	};
 
 	return CtrlEntBtn;

@@ -1,10 +1,8 @@
 define([
         'jquery',
-        
-        'text!group/aut/user/tmpl/Main.html',
-        
-        'group/aut/user/ctrl/List',
-        'group/aut/user/ctrl/Ent'      
+        'text!group/aut/std/tmpl/Main.html',  
+        'group/aut/std/ctrl/List',
+        'group/aut/std/ctrl/Ent'      
         ],
         function($,         		
         		Tmpl_Main, 
@@ -12,7 +10,6 @@ define([
         		CtrlList, 
         		CtrlEnt
         ) {
-
 	var CtrlMain 	= function (header, content, footer, grpName) {
 		var pr_divHeader 			= header;
 		var pr_divContent 			= content;
@@ -20,7 +17,7 @@ define([
 		
 		//------------------------------------------------------------------------------------
 		var pr_grpName				= grpName;
-		var pr_grpPath				= 'group/aut/user';
+		var pr_grpPath				= 'group/aut/std';
 		App.template.names[pr_grpName] = {}; //---init only one time in Main ctrl
 		
 		//------------------------------------------------------------------------------------
@@ -76,8 +73,7 @@ define([
 		
 		this.do_lc_show = function(){
 			//------------------ req lst Role for show---------------------------
-			do_get_list_roles();
-			do_get_list_cats();
+			
 			
 			//-------------------------------------------------------------------
 			do_gl_lang_append (pr_grpPath + '/transl', self.do_lc_show_callback);
@@ -112,62 +108,7 @@ define([
 				do_gl_exception_send(App.path.BASE_URL_API_PRIV,  "aut.user", "Main", "do_lc_show", e.toString()) ;
 			}
 		};
-		//---------get roles list-----------------------------------------------------------------------------
-		var do_get_list_roles = function (){
-			var ref 			= req_gl_Request_Content_Send("ServiceAutRole", "SVLst");		
-
-			var fSucces			= [];
-			fSucces.push(req_gl_funct(null, do_get_list_roles_response, []));	
-
-			var fError 			= req_gl_funct(App, do_gl_show_Notify_Msg, [$.i18n("common_err_ajax"), 0]);	
-
-			App.network.do_lc_ajax (App.path.BASE_URL_API_PRIV, App.data["HttpSecuHeader"], ref, 100000, fSucces, fError) ;
-		}
-
-		var do_get_list_roles_response = function (sharedJson){
-			if(sharedJson[App['const'].SV_CODE] == App['const'].SV_CODE_API_YES) {	
-				var data = sharedJson[App['const'].RES_DATA];
-				var cache = {};
-				$.each(data, function(i, e) {
-					if(!cache[e.grp]) {
-						cache[e.grp] = {};
-						cache[e.grp].label = 'aut_role_grp_'+e.grp;
-						cache[e.grp].roles = [];
-					}
-					cache[e.grp].roles.push(e);
-				});
-				App.data.AutRoleList = cache;
-			}
-		}
-
-		//---------get cats list-----------------------------------------------------------------------------
-		var do_get_list_cats = function (){
-			var ref 			= req_gl_Request_Content_Send("ServiceTpyCategory", "SVLstSearch");		
-
-			var fSucces			= [];
-			fSucces.push(req_gl_funct(null, do_get_list_cats_response, []));	
-
-			var fError 			= req_gl_funct(App, do_gl_show_Notify_Msg, [$.i18n("common_err_ajax"), 0]);	
-
-			App.network.do_lc_ajax (App.path.BASE_URL_API_PRIV, App.data["HttpSecuHeader"], ref, 100000, fSucces, fError) ;
-		}
-
-		var do_get_list_cats_response = function (sharedJson){
-			if(sharedJson[App['const'].SV_CODE] == App['const'].SV_CODE_API_YES) {	
-				var data = sharedJson[App['const'].RES_DATA];
-				var cache = {};
-				var grp = "aut_user";
-				$.each(data, function(i, e) {
-					if(!cache[grp]) {
-						cache[grp] = {};
-						// cache[e.grp].label = 'aut_role_grp_'+e.grp;
-						cache[grp].cats = [];
-					}
-					cache[grp].cats.push(e);
-				});
-				App.data.TpyCatList = cache;
-			}
-		}
+		
 		
 	};
 
